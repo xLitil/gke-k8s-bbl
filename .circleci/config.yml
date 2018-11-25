@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    steps:
+      - checkout
+
+       # build the application image
+      - run: docker build -t xlitil/hello-world-app:$CIRCLE_BRANCH ./hello-world-app
+
+      # deploy the image
+      - run: |
+          echo Login with $DOCKER_USER
+          docker login -u $DOCKER_USER -p $DOCKER_PASS
+          docker push xlitil/hello-world-app:$CIRCLE_BRANCH
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - build:
+          context: docker-registry

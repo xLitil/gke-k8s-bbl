@@ -14,7 +14,6 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: hello-world-app:latest
-        imagePullPolicy: Never
+        image: xlitil/hello-world-app:master
         ports:
         - containerPort: 8080
