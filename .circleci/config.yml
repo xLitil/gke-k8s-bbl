@@ -5,6 +5,11 @@ jobs:
     steps:
       - checkout
 
+      - run: |
+          GIT_COMMIT_HASH=`git log -n1 --pretty='%h'`
+          BUILD_TIME=`date +"%Y-%m-%d %H:%M:%S"`
+          echo '{ "git.commit.hash": "$GIT_COMMIT_HASH", "build.time": "$BUILD_TIME" }' > ./hello-world-app/public/configuration.json
+
        # build the application image
       - run: docker build -t xlitil/hello-world-app:$CIRCLE_BRANCH ./hello-world-app
 
