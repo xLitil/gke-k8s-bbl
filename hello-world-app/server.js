@@ -8,8 +8,14 @@ app.use(express.static('public'));
 
 app.get('/host', (req, res) => {
     res.send({
-      hostname: `${os.hostname()}`
+      "hostname": `${os.hostname()}`,
+      "env": {
+        "JUMBOTRON_COLOR": process.env['JUMBOTRON_COLOR']
+      }
     })
 })
+
+
+
 app.listen(PORT)
 console.log(`Running on http://localhost:${PORT}`)
