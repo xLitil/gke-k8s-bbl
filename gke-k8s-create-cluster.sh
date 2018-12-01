@@ -11,10 +11,16 @@
 gcloud config set container/new_scopes_behavior true
 
 gcloud container clusters create $CLUSTER_NAME \
-  --zone europe-west1-c \
+  --zone $CLUSTER_ZONE \
   --enable-ip-alias --enable-autoupgrade --metadata disable-legacy-endpoints=true \
   --addons=HttpLoadBalancing,KubernetesDashboard \
   --no-enable-basic-auth --no-issue-client-certificate \
-  --num-nodes 2  --machine-type=n1-standard-1 --disk-size=50GB
+  --num-nodes 3 \
+  --machine-type=f1-micro \
+  --disk-size=10GB
 
-gcloud container clusters describe $CLUSTER_NAME > $CLUSTER_NAME-describe.log
+# Machine type : f1-micro, n1-standard-1
+
+gcloud container clusters describe $CLUSTER_NAME --zone $CLUSTER_ZONE > $CLUSTER_NAME-describe.log
+
+gcloud container clusters get-credentials $CLUSTER_NAME

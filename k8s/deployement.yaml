@@ -15,5 +15,10 @@ spec:
       containers:
       - name: hello-world
         image: xlitil/hello-world-app:master
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
+        env:
+        - name: JUMBOTRON_COLOR
+          #value: "#4186f4"
+          value: "#f44242"

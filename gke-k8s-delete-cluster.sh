@@ -3,4 +3,4 @@
 
 # Doc : https://cloud.google.com/sdk/gcloud/reference/container/clusters/delete
 
-gcloud container clusters delete $CLUSTER_NAME --quiet
+gcloud container clusters delete $CLUSTER_NAME --quiet --zone $CLUSTER_ZONE
