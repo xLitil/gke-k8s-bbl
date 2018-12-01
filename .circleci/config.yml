@@ -11,7 +11,8 @@ jobs:
           echo "{ \"git.commit.hash\": \"$GIT_COMMIT_HASH\", \"build.time\": \"$BUILD_TIME\" }" > ./hello-world-app/public/config.json
 
        # build the application image
-      - run: docker build -t xlitil/hello-world-app:$CIRCLE_BRANCH ./hello-world-app
+      - run: |
+          docker build -t xlitil/hello-world-app:$CIRCLE_BRANCH ./hello-world-app
 
       # deploy the image
       - run: |
@@ -24,3 +25,7 @@ workflows:
     jobs:
       - build:
           context: docker-registry
+      - promote: 
+          type: approval
+          requires:
+           - buid
