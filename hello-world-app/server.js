@@ -10,7 +10,8 @@ app.get('/host', (req, res) => {
     res.send({
       "hostname": `${os.hostname()}`,
       "env": {
-        "JUMBOTRON_COLOR": process.env['JUMBOTRON_COLOR']
+        "JUMBOTRON_COLOR": process.env['JUMBOTRON_COLOR'],
+        "CURRENT_ENV": process.env['CURRENT_ENV']
       }
     })
 })
