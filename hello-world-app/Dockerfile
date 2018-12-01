@@ -1,4 +1,7 @@
 FROM node:10.14.0-alpine
+
+RUN apk add --no-cache bash curl
+
 # Create app directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
