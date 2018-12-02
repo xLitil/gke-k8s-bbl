@@ -15,7 +15,6 @@ jobs:
           docker build -t xlitil/hello-world-app:$CIRCLE_BRANCH ./hello-world-app
 
       - run: |
-      # deploy the image
           echo Login with $DOCKER_USER
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push xlitil/hello-world-app:$CIRCLE_BRANCH
@@ -27,7 +26,7 @@ jobs:
           echo "export GIT_COMMIT_HASH=\"GIT_COMMIT_HASH\"" > buildConfig/config.sh
           echo "export BUILD_TIME=\"BUILD_TIME\"" > buildConfig/config.sh
 
-     - persist_to_workspace:
+      - persist_to_workspace:
           root: buildConfig
           paths:
             - config.sh
@@ -40,7 +39,7 @@ jobs:
 
       - run: |
           cat buildConfig/config
-          
+
 workflows:
   version: 2
   commit:
