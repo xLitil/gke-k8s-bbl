@@ -14,11 +14,33 @@ jobs:
       - run: |
           docker build -t xlitil/hello-world-app:$CIRCLE_BRANCH ./hello-world-app
 
-      # deploy the image
       - run: |
+      # deploy the image
           echo Login with $DOCKER_USER
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push xlitil/hello-world-app:$CIRCLE_BRANCH
+
+      # create build config file for next jobs
+      - run: |
+          mkdir -p buildConfig
+          echo "#!/bin/bash" > buildConfig/config.sh
+          echo "export GIT_COMMIT_HASH=\"GIT_COMMIT_HASH\"" > buildConfig/config.sh
+          echo "export BUILD_TIME=\"BUILD_TIME\"" > buildConfig/config.sh
+
+     - persist_to_workspace:
+          root: buildConfig
+          paths:
+            - config.sh
+
+  tag-release:
+    machine: true
+    steps:
+      - attach_workspace:
+        at: buildConfig
+
+      - run: |
+          cat buildConfig/config
+          
 workflows:
   version: 2
   commit:
@@ -29,3 +51,6 @@ workflows:
           type: approval
           requires:
            - build
+      - tag-release:
+          requires:
+            - promote
