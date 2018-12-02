@@ -38,7 +38,8 @@ jobs:
           at: buildConfig
 
       - run: |
-          cat buildConfig/config
+          . buildConfig/config.sh
+          echo $GIT_COMMIT_HASH
 
 workflows:
   version: 2
