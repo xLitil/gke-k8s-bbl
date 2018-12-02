@@ -13,6 +13,7 @@ jobs:
        # build the application image
       - run: |
           docker build -t xlitil/hello-world-app:$CIRCLE_BRANCH ./hello-world-app
+          export IMAGE_ID=`docker images xlitil/hello-world-app:$CIRCLE_BRANCH --quiet`
 
       - run: |
           echo Login with $DOCKER_USER
@@ -23,8 +24,9 @@ jobs:
       - run: |
           mkdir -p buildConfig
           echo "#!/bin/bash" > buildConfig/config.sh
-          echo "export GIT_COMMIT_HASH=\"GIT_COMMIT_HASH\"" > buildConfig/config.sh
-          echo "export BUILD_TIME=\"BUILD_TIME\"" > buildConfig/config.sh
+          echo "export GIT_COMMIT_HASH=\"$GIT_COMMIT_HASH\"" >> buildConfig/config.sh
+          echo "export BUILD_TIME=\"$BUILD_TIME\"" >> buildConfig/config.sh
+          echo "export IMAGE_ID=\"$IMAGE_ID\"" >> buildConfig/config.sh
 
       - persist_to_workspace:
           root: buildConfig
