@@ -35,7 +35,7 @@ jobs:
     machine: true
     steps:
       - attach_workspace:
-        at: buildConfig
+          at: buildConfig
 
       - run: |
           cat buildConfig/config
