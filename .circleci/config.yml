@@ -41,8 +41,9 @@ jobs:
           echo Login with $DOCKER_USER
           docker login -u $DOCKER_USER -p $DOCKER_PASS
 
+          echo Pulling docker image $IMAGE_ID
           docker pull xlitil/hello-world-app@$IMAGE_ID
-          echo Tagging docker image $IMAGE_ID
+          echo Tagging docker image
           docker tag $IMAGE_ID xlitil/hello-world-app:$BUILD_TIME
 
           docker push xlitil/hello-world-app:$BUILD_TIME
