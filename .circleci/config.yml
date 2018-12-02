@@ -12,7 +12,7 @@ jobs:
 
           # build the application image
           docker build -t xlitil/hello-world-app:$CIRCLE_BRANCH ./hello-world-app
-          export IMAGE_ID=`docker images xlitil/hello-world-app:$CIRCLE_BRANCH --quiet`
+          export IMAGE_ID=`docker images xlitil/hello-world-app:$CIRCLE_BRANCH --digests | tail -1 | awk '{ print $3 }'`
 
           echo Login with $DOCKER_USER
           docker login -u $DOCKER_USER -p $DOCKER_PASS
@@ -37,12 +37,14 @@ jobs:
 
       - run: |
           . buildConfig/config.sh
-          echo Tagging docker image $IMAGE_ID
-          docker tag $IMAGE_ID xlitil/hello-world-app:$BUILD_TIME
 
           echo Login with $DOCKER_USER
           docker login -u $DOCKER_USER -p $DOCKER_PASS
-          docker pull xlitil/$IMAGE_ID
+
+          docker pull xlitil/hello-world-app@$IMAGE_ID
+          echo Tagging docker image $IMAGE_ID
+          docker tag $IMAGE_ID xlitil/hello-world-app:$BUILD_TIME
+
           docker push xlitil/hello-world-app:$BUILD_TIME
 
 workflows:
