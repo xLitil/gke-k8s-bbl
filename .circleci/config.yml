@@ -7,7 +7,7 @@ jobs:
 
       - run: |
           export GIT_COMMIT_HASH=`git log -n1 --pretty='%h'`
-          export BUILD_TIME=`date +"%Y-%m-%d %H:%M:%S"`
+          export BUILD_TIME=`date +"%Y%m%d-%H%M%S"`
           echo "{ \"git.commit.hash\": \"$GIT_COMMIT_HASH\", \"build.time\": \"$BUILD_TIME\" }" > ./hello-world-app/public/config.json
 
           # build the application image
