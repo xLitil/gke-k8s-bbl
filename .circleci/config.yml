@@ -14,10 +14,10 @@ jobs:
           docker build -t xlitil/hello-world-app:$CIRCLE_BRANCH ./hello-world-app
           export IMAGE_ID=`docker images xlitil/hello-world-app:$CIRCLE_BRANCH --quiet`
 
+
           echo Login with $DOCKER_USER
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push xlitil/hello-world-app:$CIRCLE_BRANCH
-
           # create build config file for next jobs
           mkdir -p buildConfig
           echo "#!/bin/bash" > buildConfig/config.sh
@@ -38,8 +38,11 @@ jobs:
 
       - run: |
           . buildConfig/config.sh
-          cat buildConfig/config.sh
-          echo $GIT_COMMIT_HASH
+          docker tag $IMAGE_ID xlitil/hello-world-app:$BUILD_TIME
+
+          echo Login with $DOCKER_USER
+          docker login -u $DOCKER_USER -p $DOCKER_PASS
+          docker push xlitil/hello-world-app:$BUILD_TIME
 
 workflows:
   version: 2
