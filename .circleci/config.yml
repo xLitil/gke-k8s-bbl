@@ -16,6 +16,7 @@ jobs:
           echo Login with $DOCKER_USER
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push xlitil/hello-world-app:$CIRCLE_BRANCH
+          docker images
           export IMAGE_ID=`docker images xlitil/hello-world-app:$CIRCLE_BRANCH --digests | tail -1 | awk '{ print $3 }'`
           # create build config file for next jobs
           mkdir -p buildConfig
