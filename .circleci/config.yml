@@ -12,11 +12,11 @@ jobs:
 
           # build the application image
           docker build -t xlitil/hello-world-app:$CIRCLE_BRANCH ./hello-world-app
-          export IMAGE_ID=`docker images xlitil/hello-world-app:$CIRCLE_BRANCH --digests | tail -1 | awk '{ print $3 }'`
 
           echo Login with $DOCKER_USER
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push xlitil/hello-world-app:$CIRCLE_BRANCH
+          export IMAGE_ID=`docker images xlitil/hello-world-app:$CIRCLE_BRANCH --digests | tail -1 | awk '{ print $3 }'`
           # create build config file for next jobs
           mkdir -p buildConfig
           echo "#!/bin/bash" > buildConfig/config.sh
