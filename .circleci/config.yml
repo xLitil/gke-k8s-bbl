@@ -38,6 +38,7 @@ jobs:
 
       - run: |
           . buildConfig/config.sh
+          echo Tagging docker image $IMAGE_ID
           docker tag $IMAGE_ID xlitil/hello-world-app:$BUILD_TIME
 
           echo Login with $DOCKER_USER
@@ -55,5 +56,6 @@ workflows:
           requires:
            - build
       - tag-release:
+          context: docker-registry
           requires:
             - promote
