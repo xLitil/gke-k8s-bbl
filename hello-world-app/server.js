@@ -1,8 +1,19 @@
 const express = require('express')
+var morgan = require('morgan')
+var path = require('path')
+var rfs = require('rotating-file-stream')
 const os = require('os');
 
 const PORT = 8080
 const app = express()
+
+// create a rotating write stream
+var accessLogStream = rfs('access.log', {
+  path: path.join(__dirname, 'log'),
+  maxSize: '1M',
+  maxFiles: 2
+})
+app.use(morgan('combined', { stream: accessLogStream }));
 
 app.use(express.static('public'));
 
