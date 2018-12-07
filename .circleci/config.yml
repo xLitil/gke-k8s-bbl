@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker: # run the steps with Docker
-      - image: circleci/node:chakracore-10.13.0-browsers-legacy 
+      - image: docker:18.09-git 
     steps:
       - checkout
 
