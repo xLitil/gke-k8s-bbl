@@ -1,7 +1,6 @@
 version: 2
 jobs:
   build:
-    machine: true
     steps:
       - checkout
 
@@ -16,14 +15,11 @@ jobs:
           echo Login with $DOCKER_USER
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push xlitil/hello-world-app:$CIRCLE_BRANCH
-          docker images --no-trunc --digests xlitil/hello-world-app:$CIRCLE_BRANCH
-          export IMAGE_ID=`docker images --no-trunc --digests xlitil/hello-world-app:$CIRCLE_BRANCH | tail -1 | awk '{ print $4 }'`
           # create build config file for next jobs
           mkdir -p buildConfig
           echo "#!/bin/bash" > buildConfig/config.sh
           echo "export GIT_COMMIT_HASH=\"$GIT_COMMIT_HASH\"" >> buildConfig/config.sh
           echo "export BUILD_TIME=\"$BUILD_TIME\"" >> buildConfig/config.sh
-          echo "export IMAGE_ID=\"$IMAGE_ID\"" >> buildConfig/config.sh
 
       - persist_to_workspace:
           root: buildConfig
