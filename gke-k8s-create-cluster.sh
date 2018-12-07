@@ -16,7 +16,7 @@ gcloud container clusters create $CLUSTER_NAME \
   --addons=HttpLoadBalancing,KubernetesDashboard \
   --no-enable-basic-auth --no-issue-client-certificate \
   --num-nodes 3 \
-  --machine-type=f1-micro \
+  --machine-type=n1-standard-1 \
   --disk-size=10GB
 
 # Machine type : f1-micro, n1-standard-1

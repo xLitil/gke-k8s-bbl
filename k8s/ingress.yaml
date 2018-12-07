@@ -1,8 +1,13 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: test-ingress
+  name: ingress-lb
 spec:
-  backend:
-    serviceName: hello-world-srv
-    servicePort: 80
+  rules:
+  - host: dev-xlitil.ddns.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: hello-world-svc-dev
+          servicePort: 80

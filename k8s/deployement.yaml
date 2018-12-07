@@ -6,11 +6,13 @@ spec:
   selector:
     matchLabels:
       app: hello-world
+      env: DEV
   replicas: 2
   template:
     metadata:
       labels:
         app: hello-world
+        env: DEV
     spec:
       containers:
       - name: hello-world
