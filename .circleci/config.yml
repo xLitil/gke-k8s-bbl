@@ -1,8 +1,7 @@
 version: 2
 jobs:
   build:
-    docker: # run the steps with Docker
-      - image: docker:18.09-git 
+    machine: true
     steps:
       - checkout
 
